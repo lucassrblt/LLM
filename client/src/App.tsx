@@ -23,6 +23,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const [lastUserMessage, setLastUserMessage] = useState<string | null>(null);
+
   const handleSendMessage = async (text: string) => {
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -30,26 +32,36 @@ function App() {
       isAi: false,
       timestamp: new Date().toLocaleTimeString(),
     };
+    setLastUserMessage(text);
     setMessages((prev) => [...prev, userMessage]);
+    await handleAiRequest(text);
+  };
 
+  const handleAiRequest = async (text: string) => {
     setIsLoading(true);
-    setTimeout(() => {
-      const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: "This is a simulated AI response. In a real application, you would integrate with an AI API here.",
-        isAi: true,
-        timestamp: new Date().toLocaleTimeString(),
-      };
-      setMessages((prev) => [...prev, aiMessage]);
-      setIsLoading(false);
-    }, 1000);
+    const response = await fetch("http://localhost:5000/prompt", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prompt: text, question: text }),
+    });
+
+    console.log("response", response);
+
+    // const message: Message = {
+    //   id: Date.now().toString(),
+    //   text: response,
+    //   isAi: false,
+    //   timestamp: new Date().toLocaleTimeString(),
+    // };
+    // setMessages((prev) => [...prev, message]);
+
+    // console.log("response", response);
   };
 
   const handleFileSelect = async (value: string) => {
     setSelectedFile(value);
-    const response = await fetch(`/api/files/${value}`);
-    const data = await response.json();
-    console.log("data", data);
     const message: Message = {
       id: Date.now().toString(),
       text: `Currently reading the file that you selected`,
@@ -57,6 +69,15 @@ function App() {
       timestamp: new Date().toLocaleTimeString(),
     };
     setMessages((prev) => [...prev, message]);
+    setTimeout(() => {
+      const message: Message = {
+        id: Date.now().toString(),
+        text: `Finishing reading your file`,
+        isAi: true,
+        timestamp: new Date().toLocaleTimeString(),
+      };
+      setMessages((prev) => [...prev, message]);
+    }, 3000);
   };
 
   return (
