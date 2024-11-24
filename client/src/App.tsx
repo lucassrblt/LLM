@@ -39,7 +39,7 @@ function App() {
 
   const handleAiRequest = async (text: string) => {
     setIsLoading(true);
-    const response = await fetch("http://localhost:5000/prompt", {
+    const response = await fetch("http://127.0.0.1:5000", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

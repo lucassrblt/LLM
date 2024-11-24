@@ -8,7 +8,8 @@ load_dotenv()
 
 def create_app():
     app = Flask(__name__)
-    CORS(app)
+    CORS(app, resources={r"/*": {"origins": ["http://localhost:5173", "http://localhost:5174" ]}})
+
     s3_client_instance = s3_client()
     register_routes(app, s3_client_instance)
     

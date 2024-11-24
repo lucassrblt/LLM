@@ -3,6 +3,7 @@ name = "app"
 version = "0.1.0"
 description = ""
 authors = ["lucas.rimbault <lucas.rimbault@tentelemed.com>"]
+package-mode = false
 readme = "README.md"
 
 [tool.poetry.dependencies]
@@ -10,8 +11,10 @@ python = "^3.13"
 boto3 = "^1.35.67"
 flask = "^3.1.0"
 python-dotenv = "^1.0.1"
+flask-cors = "^4.0.0" 
 pymupdf = "^1.24.14"
 ollama = "^0.4.0"
+cors = "^1.0.1"
 
 
 [build-system]

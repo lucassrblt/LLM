@@ -4,6 +4,10 @@ from .file import save_file, extract_text
 from .ollama import ollama_interaction
 
 def register_routes(app, s3_client_instance):
+
+    @app.route('/hello', methods=['GET'])
+    def hello():
+        return 'Hello, World!'
     
     @app.route('/prompt', methods=['POST'])
     def prompt():
