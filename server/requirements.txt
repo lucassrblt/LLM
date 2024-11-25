@@ -1,2 +1,4 @@
-boto3
-flask
+Flask==2.3.2
+Flask-CORS==3.0.10
+python-dotenv==1.0.0
+boto3 
