@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
-from .routes import register_routes
-from .s3 import s3_client
+from routes import register_routes
+from s3 import s3_client
 from dotenv import load_dotenv
 
 load_dotenv()
